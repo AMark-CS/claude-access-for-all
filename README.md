@@ -37,18 +37,18 @@ Open knowledge can reduce confusion, expose misleading promises, help people pro
 
 ## Install and run
 
-Requires macOS, Node.js 18+, Python 3.9+, and Git for the GitHub install. Install Claude Code or Claude Desktop separately when needed. The project is currently distributed from GitHub; it is not yet published to the npm registry.
+Requires macOS, Node.js 18+, Python 3.9+, and Git for the GitHub install. Install Claude Code or Claude Desktop separately when needed. Install the CLI from the npm registry or directly from GitHub.
 
 Run the interactive menu without a permanent install:
 
 ```sh
-npx --yes github:AMark-CS/claude-access-for-all
+npx --yes claude-access-for-all
 ```
 
 Or install the command globally:
 
 ```sh
-npm install -g github:AMark-CS/claude-access-for-all
+npm install -g claude-access-for-all
 claude-access
 ```
 
@@ -65,7 +65,7 @@ claude-access reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
 open renewal.ics
 ```
 
-Use `claude-access help` to see the complete command list. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
+To install directly from GitHub, use `npm install -g github:AMark-CS/claude-access-for-all`. Use `claude-access help` to see the complete command list. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
 
 For the calendar reminder, replace the example date with the next billing date shown by your billing provider. The file contains one all-day review event with an alert; import it into Apple Calendar and check your notification settings. It neither cancels nor renews anything, and must be regenerated when the billing date changes.
 
