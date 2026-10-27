@@ -16,7 +16,7 @@ test('help and unknown commands have useful exit codes', () => {
 
 test('audit reaches packaged Python without exposing secrets', () => {
   const marker = 'test-secret-not-for-output';
-  const result = spawnSync(process.execPath, [cli, 'audit'], { encoding: 'utf8', env: { ...process.env, ANTHROPIC_API_KEY: marker } });
+  const result = spawnSync(process.execPath, [cli, 'audit', '--json'], { encoding: 'utf8', env: { ...process.env, ANTHROPIC_API_KEY: marker } });
   assert.equal(result.status, 0, result.stderr);
   assert.equal(JSON.parse(result.stdout).credential_overrides_set.ANTHROPIC_API_KEY, true);
   assert.ok(!result.stdout.includes(marker));
@@ -33,4 +33,24 @@ test('menu handles noninteractive sessions without hanging', () => {
   const result = run('menu');
   assert.equal(result.status, 1);
   assert.match(result.stderr, /needs a terminal/);
+});
+
+
+test('default diagnostics are readable and identify active variables without values', () => {
+  const marker = 'test-secret-never-for-display';
+  for (const command of ['doctor', 'audit']) {
+    const result = spawnSync(process.execPath, [cli, command], { encoding: 'utf8', env: { ...process.env, ANTHROPIC_API_KEY: marker, NO_COLOR: '1' } });
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /CLAUDE ACCESS/);
+    assert.match(result.stdout, /ANTHROPIC_API_KEY/);
+    assert.ok(!result.stdout.includes(marker));
+    assert.ok(!result.stdout.includes('\u001b['));
+    assert.throws(() => JSON.parse(result.stdout));
+  }
+});
+
+test('doctor JSON remains machine readable', () => {
+  const result = run('doctor', '--json');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(typeof JSON.parse(result.stdout).claude_on_path, 'boolean');
 });

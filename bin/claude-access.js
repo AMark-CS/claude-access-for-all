@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -10,8 +11,8 @@ const help = `Claude Access for All
 Usage: claude-access [command] [options]
 
   menu                   Open the interactive menu (default)
-  doctor                 Check local installation and configuration presence
-  audit                  Inspect CLI environment signals locally
+  doctor [--json]        Check local installation and configuration presence
+  audit [--json]         Inspect CLI environment signals locally
   cli [options] [-- ...] Launch Claude Code with scoped locale settings
   app [options]          Launch Claude Desktop with scoped locale settings
   web [options]          Launch Claude in a separate browser profile
@@ -56,7 +57,7 @@ function dispatch(command, args = []) {
       if (process.platform !== 'darwin') { console.error('The guide launcher requires macOS.'); return 1; }
       return run('/usr/bin/open', ['https://github.com/AMark-CS/claude-access-for-all/blob/main/docs/privacy-inspector.md']);
     case 'help': case '--help': case '-h': console.log(help); return 0;
-    case 'version': case '--version': case '-v': console.log('0.1.0'); return 0;
+    case 'version': case '--version': case '-v': console.log(JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version); return 0;
     default: console.error(`Unknown command: ${command}\n\n${help}`); return 2;
   }
 }

@@ -65,7 +65,7 @@ claude-access reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
 open renewal.ics
 ```
 
-To install directly from GitHub, use `npm install -g github:AMark-CS/claude-access-for-all`. Use `claude-access help` to see the complete command list. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
+To install directly from GitHub, use `npm install -g github:AMark-CS/claude-access-for-all`. Use `claude-access help` to see the complete command list. Diagnostics display a readable summary by default; use `claude-access doctor --json` or `claude-access audit --json` for machine-readable output. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
 
 For the calendar reminder, replace the example date with the next billing date shown by your billing provider. The file contains one all-day review event with an alert; import it into Apple Calendar and check your notification settings. It neither cancels nor renews anything, and must be regenerated when the billing date changes.
 

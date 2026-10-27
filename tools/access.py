@@ -9,6 +9,8 @@ import shutil
 import sys
 import uuid
 
+from report import render_doctor
+
 VARIABLES = (
     'ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'ANTHROPIC_BASE_URL',
     'CLAUDE_CODE_USE_BEDROCK', 'CLAUDE_CODE_USE_VERTEX', 'CLAUDE_CODE_USE_FOUNDRY',
@@ -92,13 +94,15 @@ def reminder(renewal, lead, today=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    commands.add_parser('doctor', help='Print an offline JSON report; values stay private.')
+    diagnostic = commands.add_parser('doctor', help='Print an offline environment report.')
+    diagnostic.add_argument('--json', action='store_true', help='Output machine-readable JSON.')
     calendar = commands.add_parser('reminder', help='Print a one-time .ics calendar to stdout.')
     calendar.add_argument('--renewal', type=parse_date, required=True)
     calendar.add_argument('--days-before', type=days_before, default=3)
     args = parser.parse_args()
     if args.command == 'doctor':
-        print(json.dumps(doctor(), indent=2))
+        result = doctor()
+        print(json.dumps(result, indent=2) if args.json else render_doctor(result))
     else:
         try:
             content = reminder(args.renewal, args.days_before)

@@ -1,6 +1,6 @@
 {
   "name": "claude-access-for-all",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A macOS guide and local privacy toolkit for Claude Code, Desktop, and web",
   "license": "MIT",
   "type": "module",

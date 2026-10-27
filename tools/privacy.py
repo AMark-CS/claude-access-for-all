@@ -12,6 +12,8 @@ import sys
 import tempfile
 import time
 
+from report import render_audit
+
 ROUTING = ('ANTHROPIC_BASE_URL', 'HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'NO_PROXY',
            'http_proxy', 'https_proxy', 'all_proxy', 'no_proxy')
 AUTH = ('ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN')
@@ -65,7 +67,8 @@ def browser_command(browser, profile, language, timezone, locale):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
-    sub.add_parser('audit', help='Show local signal presence without exposing secret values.')
+    diagnostic = sub.add_parser('audit', help='Show local signals without exposing secret values.')
+    diagnostic.add_argument('--json', action='store_true', help='Output machine-readable JSON.')
     for name in ('cli', 'app', 'web'):
         command = sub.add_parser(name, help='Launch ' + name + ' with process-scoped settings.')
         command.add_argument('--timezone', type=validate_timezone, default='UTC')
@@ -80,7 +83,8 @@ def main():
             command.add_argument('--language', default='en-US', type=validate_locale)
     args = parser.parse_args()
     if args.command == 'audit':
-        print(json.dumps(audit(), indent=2))
+        result = audit()
+        print(json.dumps(result, indent=2) if args.json else render_audit(result))
         return
     if sys.platform != 'darwin':
         parser.error('Launch commands require macOS.')
