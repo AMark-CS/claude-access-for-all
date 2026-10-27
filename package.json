@@ -1,0 +1,43 @@
+{
+  "name": "claude-access-for-all",
+  "version": "0.1.0",
+  "description": "A macOS guide and local privacy toolkit for Claude Code, Desktop, and web",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "claude-access": "bin/claude-access.js"
+  },
+  "files": [
+    "bin/",
+    "tools/*.py",
+    "web/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AMark-CS/claude-access-for-all.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AMark-CS/claude-access-for-all/issues"
+  },
+  "homepage": "https://github.com/AMark-CS/claude-access-for-all#readme",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "macos",
+    "privacy",
+    "cli"
+  ],
+  "scripts": {
+    "test": "node --test tests/cli.test.js && python3 -m unittest discover -s tests -v && python3 tools/check_docs.py"
+  }
+}

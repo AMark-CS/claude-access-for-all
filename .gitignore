@@ -6,3 +6,6 @@ __pycache__/
 *.ics
 .venv/
 private/
+
+node_modules/
+*.tgz

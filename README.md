@@ -35,22 +35,43 @@ Open knowledge can reduce confusion, expose misleading promises, help people pro
 | Local tools | Offline diagnostics, scoped launchers, browser signal inspector, and calendar reminder |
 | Evidence | Dated official sources and a contribution standard |
 
-## Run the local tools
+## Install and run
 
-Python 3.9+ is required for this repository's tools. If `python3` is missing, install it from [Python.org](https://www.python.org/downloads/macos/). Claude Code itself has separate installation requirements.
+Requires macOS, Node.js 18+, Python 3.9+, and Git for the GitHub install. Install Claude Code or Claude Desktop separately when needed. The project is currently distributed from GitHub; it is not yet published to the npm registry.
+
+Run the interactive menu without a permanent install:
 
 ```sh
-git clone https://github.com/AMark-CS/claude-access-for-all.git
-cd claude-access-for-all
-python3 tools/access.py doctor
-python3 tools/privacy.py audit
-python3 tools/access.py reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
+npx --yes github:AMark-CS/claude-access-for-all
+```
+
+Or install the command globally:
+
+```sh
+npm install -g github:AMark-CS/claude-access-for-all
+claude-access
+```
+
+Choose an action from the interactive menu, or call one directly:
+
+```sh
+claude-access doctor
+claude-access audit
+claude-access cli --timezone UTC
+claude-access app --timezone UTC
+claude-access web --browser chrome --timezone UTC
+claude-access inspect
+claude-access reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
 open renewal.ics
 ```
 
-Replace the example date with the next billing date shown by your billing provider. The calendar file contains one all-day review event before that date and an alert on the review day. Import it into Apple Calendar and check your notification settings. It neither cancels nor renews anything, and must be regenerated when the billing date changes.
+Use `claude-access help` to see the complete command list. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
 
-The doctor runs offline, reads a small allowlist of environment-variable names, and prints only whether they are set. It never reads credentials, sends requests, or determines account eligibility. It does not inspect macOS system proxy settings or Claude configuration files. Review the short [source](tools/access.py) before running it.
+For the calendar reminder, replace the example date with the next billing date shown by your billing provider. The file contains one all-day review event with an alert; import it into Apple Calendar and check your notification settings. It neither cancels nor renews anything, and must be regenerated when the billing date changes.
+
+The diagnostics run offline and do not print environment-variable values. The scoped launchers request process-local timezone and language settings; Desktop and browsers may behave differently. The browser launcher opens Claude in a separate profile and prints its private data directory. Review the [privacy guide](docs/privacy-inspector.md) for limitations before use.
+
+To run the source version directly without npm, use `python3 tools/access.py doctor` or `python3 tools/privacy.py audit` from a clone. Review the short [source](tools/access.py) before running it.
 
 ## Honest boundaries
 
