@@ -35,6 +35,14 @@ Open knowledge can reduce confusion, expose misleading promises, help people pro
 | Local tools | Offline diagnostics, scoped launchers, browser signal inspector, and calendar reminder |
 | Evidence | Dated official sources and a contribution standard |
 
+## Session location example
+
+An example of an account's active-session view showing a reported location:
+
+![Active session showing Los Angeles, California, US as the reported location](docs/images/active-session-example.png)
+
+The displayed location is provided by the service. A process timezone setting alone does not change the network exit IP or guarantee a particular session location.
+
 ## Install and run
 
 Requires macOS, Node.js 18+, Python 3.9+, and Git for the GitHub install. Install Claude Code or Claude Desktop separately when needed. Install the CLI from the npm registry or directly from GitHub.
