@@ -80,6 +80,7 @@ Run `claude-access` without arguments to open the interactive menu, or use a com
 | `claude-access audit` | Inspect the current terminal's timezone names and whether locale, proxy, endpoint, and authentication variables are set. |
 | `claude-access cli` | Launch Claude Code with process-scoped settings, requesting the Los Angeles timezone by default. |
 | `claude-access app` | Request a new Claude Desktop instance with process-scoped settings and the Los Angeles timezone by default. |
+| `claude-access desktop-shortcut` | Create a standalone macOS launcher in the current directory that requests the same Desktop settings. |
 | `claude-access web` | Open Claude in a separate Chrome profile, requesting the Los Angeles timezone by default; use `--browser edge` for Microsoft Edge. |
 | `claude-access inspect` | Open the local browser signal inspector in the default browser. |
 | `claude-access reminder --renewal YYYY-MM-DD` | Print a one-time renewal-review calendar event. Redirect the output to an `.ics` file and import it into Calendar. |
@@ -88,6 +89,12 @@ Run `claude-access` without arguments to open the interactive menu, or use a com
 | `claude-access version` | Show the installed package version. |
 
 The score is not a complete browser score, a ban prediction, or an eligibility check. Desktop and browsers may not honor the requested timezone. For available options, run a supported subcommand with `--help`, such as `claude-access web --help`.
+
+## Open Claude from the Dock
+
+Run `claude-access desktop-shortcut` to create `Claude Access Launcher.app` in the current directory. Quit Claude first, then double-click the launcher. Drag the launcher to the Dock for future launches; after Claude opens, use Command-Tab to switch to it as usual. The launcher is a separate app, and does not replace or modify Claude. An existing Claude instance may reuse state or services; the launcher cannot change an already-running process. It requests the Los Angeles timezone and English locale, but Claude or its services may read system settings independently. No change to network routing or account eligibility is made.
+
+Run `claude-access desktop-shortcut --help` to select a different output path, timezone, or locale. The launcher refuses to overwrite an existing path. To remove it, quit it and delete its `.app` bundle.
 
 ## Examples
 

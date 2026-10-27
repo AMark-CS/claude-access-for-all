@@ -29,7 +29,7 @@ python3 tools/privacy.py app --timezone America/Los_Angeles --locale en_US.UTF-8
 python3 tools/privacy.py app --app '/Applications/Claude.app'
 ```
 
-This asks macOS Launch Services to open a new app instance with the specified environment values. Desktop may read OS preferences directly, reuse existing services, or use app-managed settings instead; these process overrides are an experiment, not a verified masking mechanism. Browser-based sign-in runs in its own browser process. Verify Desktop-specific behavior separately and use [official network settings](https://code.claude.com/docs/en/network-config) for network configuration.
+This asks macOS Launch Services to open a new app instance with the specified environment values. To create a clickable launcher, run `claude-access desktop-shortcut`, quit Claude, and open the newly created `Claude Access Launcher.app`. Add it to the Dock for later launches; Command-Tab switches to Claude after it is open. Desktop may read OS preferences directly, reuse existing services, or use app-managed settings instead; these process overrides are an experiment, not a verified masking mechanism. Browser-based sign-in runs in its own browser process. Verify Desktop-specific behavior separately and use [official network settings](https://code.claude.com/docs/en/network-config) for network configuration.
 
 ## 3. Claude on the web
 

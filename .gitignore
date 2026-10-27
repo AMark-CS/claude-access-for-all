@@ -9,3 +9,5 @@ private/
 
 node_modules/
 *.tgz
+
+Claude Access Launcher.app/
