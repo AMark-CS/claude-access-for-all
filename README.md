@@ -52,7 +52,29 @@ npm install -g claude-access-for-all
 claude-access
 ```
 
-Choose an action from the interactive menu, or call one directly:
+## Command reference
+
+Run `claude-access` without arguments to open the interactive menu, or use a command directly:
+
+| Command | What it does |
+| --- | --- |
+| `claude-access` or `claude-access menu` | Open the interactive menu for diagnostics, launching clients, and reminders. |
+| `claude-access score` | Score the current terminal's timezone and UTC offset using a partial, offline heuristic. Browser-only signals are not measured. |
+| `claude-access doctor` | Check the system, Claude Code installation, and whether common environment variables are set. |
+| `claude-access audit` | Inspect the current terminal's timezone names and whether locale, proxy, endpoint, and authentication variables are set. |
+| `claude-access cli` | Launch Claude Code with process-scoped settings, requesting the Los Angeles timezone by default. |
+| `claude-access app` | Request a new Claude Desktop instance with process-scoped settings and the Los Angeles timezone by default. |
+| `claude-access web` | Open Claude in a separate Chrome profile, requesting the Los Angeles timezone by default; use `--browser edge` for Microsoft Edge. |
+| `claude-access inspect` | Open the local browser signal inspector in the default browser. |
+| `claude-access reminder --renewal YYYY-MM-DD` | Print a one-time renewal-review calendar event. Redirect the output to an `.ics` file and import it into Calendar. |
+| `claude-access guide` | Open the English privacy and access guide. |
+| `claude-access help` | Show the command list and examples. |
+| `claude-access version` | Show the installed package version. |
+
+The score is not a complete browser score, a ban prediction, or an eligibility check. Desktop and browsers may not honor the requested timezone. For available options, run a supported subcommand with `--help`, such as `claude-access web --help`.
+
+## Examples
+
 
 ```sh
 claude-access doctor
