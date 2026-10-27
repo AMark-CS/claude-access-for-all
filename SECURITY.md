@@ -1,6 +1,6 @@
 # Security and privacy
 
-The toolkit reads only the local platform and the presence of an allowlist of environment variables. It does not inspect browser cookies, Keychain entries, shell history, Claude settings, or token files. It does not authenticate, install software, alter network settings, or initiate purchases.
+The offline diagnostics read the local platform, timezone names, and the presence of an allowlist of environment variables. It does not inspect browser cookies, Keychain entries, shell history, Claude settings, or token files. The optional launchers start locally installed apps with requested process-scoped locale and timezone settings. The web launcher opens Claude and creates or reuses a dedicated profile. The local browser inspector collects browser-visible signals only within the page. The tools do not authenticate on your behalf, install software, alter system network settings, or initiate purchases.
 
 Calendar output is written to standard output. Shell redirection creates the destination file; the program does not import it into Calendar or change a subscription. No telemetry is collected.
 

@@ -21,7 +21,8 @@ Open knowledge can reduce confusion, expose misleading promises, help people pro
 3. Choose and manage a plan with the [subscription playbook](docs/subscriptions.md).
 4. Diagnose connectivity with the [network and “clean IP” guide](docs/network.md).
 5. Protect your account with the [account continuity guide](docs/account-continuity.md).
-6. Use the [troubleshooting decision table](docs/troubleshooting.md) when something breaks.
+6. Review the [client privacy inspector](docs/privacy-inspector.md) for CLI, Desktop, and web.
+7. Use the [troubleshooting decision table](docs/troubleshooting.md) when something breaks.
 
 ## What you get
 
@@ -31,7 +32,7 @@ Open knowledge can reduce confusion, expose misleading promises, help people pro
 | Network reliability | Separate proxy, TLS, service, and account problems |
 | Subscription management | Record billing ownership and review renewals |
 | Account continuity | Secure access, preserve work, and prepare an appeal |
-| Local tools | Offline environment report and one-time calendar reminder |
+| Local tools | Offline diagnostics, scoped launchers, browser signal inspector, and calendar reminder |
 | Evidence | Dated official sources and a contribution standard |
 
 ## Run the local tools
@@ -42,6 +43,7 @@ Python 3.9+ is required for this repository's tools. If `python3` is missing, in
 git clone https://github.com/AMark-CS/claude-access-for-all.git
 cd claude-access-for-all
 python3 tools/access.py doctor
+python3 tools/privacy.py audit
 python3 tools/access.py reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
 open renewal.ics
 ```
@@ -60,6 +62,6 @@ We document practical access issues and advocate broader availability. We do not
 
 Contribute a reproducible fix, a clearer explanation, an accessibility improvement, or a dated policy correction. Please read [CONTRIBUTING.md](CONTRIBUTING.md), the [evidence register](docs/sources.md), and [SECURITY.md](SECURITY.md) first. Never put account identifiers, IP addresses, receipts, tokens, or payment details in public issues.
 
-Potential next steps: a macOS menu bar companion, additional billing-provider walkthroughs, and a structured history of access barriers. These are roadmap ideas; the current release is the guide and two local tools above.
+Potential next steps: a macOS menu bar companion, additional billing-provider walkthroughs, and a structured history of access barriers. These are roadmap ideas.
 
 Independent community project. Not affiliated with or endorsed by Anthropic. Claude and Claude Code are their respective owners' trademarks. MIT licensed. Official sources last reviewed **October 27, 2026**; recheck them before purchasing.
