@@ -81,9 +81,6 @@ Run `claude-access` without arguments to open the interactive menu, or use a com
 | `claude-access cli` | Launch Claude Code with process-scoped settings, requesting the Los Angeles timezone by default. |
 | `claude-access app` | Request a new Claude Desktop instance with process-scoped settings and the Los Angeles timezone by default. |
 | `claude-access desktop-shortcut` | Create a standalone macOS launcher in the current directory that requests the same Desktop settings. |
-| `claude-access autostart enable` | Install an opt-in login item that requests a background Claude Desktop launch at the next login. |
-| `claude-access autostart status` | Check whether the login item is installed and loaded in this session. |
-| `claude-access autostart disable` | Remove the login item without quitting Claude. |
 | `claude-access web` | Open Claude in a separate Chrome profile, requesting the Los Angeles timezone by default; use `--browser edge` for Microsoft Edge. |
 | `claude-access inspect` | Open the local browser signal inspector in the default browser. |
 | `claude-access reminder --renewal YYYY-MM-DD` | Print a one-time renewal-review calendar event. Redirect the output to an `.ics` file and import it into Calendar. |
@@ -92,19 +89,6 @@ Run `claude-access` without arguments to open the interactive menu, or use a com
 | `claude-access version` | Show the installed package version. |
 
 The score is not a complete browser score, a ban prediction, or an eligibility check. Desktop and browsers may not honor the requested timezone. For available options, run a supported subcommand with `--help`, such as `claude-access web --help`.
-
-## Start Claude when you log in
-
-```sh
-claude-access autostart enable
-claude-access autostart status
-# To remove it later:
-claude-access autostart disable
-```
-
-This creates a per-user LaunchAgent at `~/Library/LaunchAgents/org.claudeaccess.desktop-login.plist`. At the next macOS login it requests a background launch of Claude Desktop with `America/Los_Angeles` and `en_US.UTF-8`. The first run does not quit or restart an existing Claude process. To change the timezone, disable the item and enable it with `--timezone` followed by an IANA timezone. macOS can also let you manage background items in System Settings.
-
-The login item makes one launch request per login; it is not a resident monitor and does not intercept later launches. If Claude is already running, Launch Services may reuse it and the requested environment will not be injected into that process. An app or its background services may read OS settings instead of environment values. It does not configure network routing, change the system timezone, or establish account eligibility. Use the launcher below to request a fresh instance after quitting Claude.
 
 ## Open Claude from the Dock
 
