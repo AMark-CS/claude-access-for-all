@@ -16,7 +16,6 @@ Usage: claude-access [command] [options]
   score                  Score locally observable timezone signals
   cli [options] [-- ...] Launch Claude Code with scoped locale settings
   app [options]          Launch Claude Desktop with scoped locale settings
-  desktop-shortcut       Create a standalone macOS launcher app
   web [options]          Launch Claude in a separate browser profile
   inspect                Open the local browser signal inspector
   reminder [options]     Write a one-time calendar event to stdout
@@ -50,7 +49,6 @@ function dispatch(command, args = []) {
     case 'doctor': return run('python3', [join(root, 'tools/access.py'), 'doctor', ...args]);
     case 'audit': return run('python3', [join(root, 'tools/privacy.py'), 'audit', ...args]);
     case 'score': return run('python3', [join(root, 'tools/score.py'), ...args]);
-    case 'desktop-shortcut': return run('python3', [join(root, 'tools/desktop_shortcut.py'), ...args]);
     case 'cli': case 'app': case 'web':
       return run('python3', [join(root, 'tools/privacy.py'), command, ...args]);
     case 'reminder': return run('python3', [join(root, 'tools/access.py'), 'reminder', ...args]);
@@ -73,10 +71,10 @@ async function menu() {
   }
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   try {
-    console.log(`\nClaude Access for All\n\n  1  Check local environment\n  2  Inspect CLI signals\n  3  Start Claude Code\n  4  Start Claude Desktop\n  5  Start Claude in a separate browser profile\n  6  Open browser signal inspector\n  7  Open the privacy guide\n  8  Create a renewal calendar file\n  9  Score local timezone signals\n  10 Create a macOS desktop launcher\n  0  Exit\n`);
+    console.log(`\nClaude Access for All\n\n  1  Check local environment\n  2  Inspect CLI signals\n  3  Start Claude Code\n  4  Start Claude Desktop\n  5  Start Claude in a separate browser profile\n  6  Open browser signal inspector\n  7  Open the privacy guide\n  8  Create a renewal calendar file\n  9  Score local timezone signals\n  0  Exit\n`);
     const choice = (await rl.question('Choose an option: ')).trim();
     if (choice === '0') return 0;
-    const simple = { '1': 'doctor', '2': 'audit', '3': 'cli', '4': 'app', '6': 'inspect', '7': 'guide', '9': 'score', '10': 'desktop-shortcut' };
+    const simple = { '1': 'doctor', '2': 'audit', '3': 'cli', '4': 'app', '6': 'inspect', '7': 'guide', '9': 'score' };
     if (simple[choice]) { rl.close(); return dispatch(simple[choice]); }
     if (choice === '5') {
       const browser = (await rl.question('Browser (chrome/edge) [chrome]: ')).trim() || 'chrome';
@@ -97,7 +95,7 @@ async function menu() {
       console.log(`Created ${output}. Import it into Calendar and check notification settings.`);
       return 0;
     }
-    console.error('Unknown option. Run the menu again to choose 0–10.');
+    console.error('Unknown option. Run the menu again to choose 0–9.');
     return 2;
   } finally { rl.close(); }
 }
