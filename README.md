@@ -43,6 +43,14 @@ An example of an account's active-session view showing a reported location:
 
 The displayed location is provided by the service. A process timezone setting alone does not change the network exit IP or guarantee a particular session location.
 
+## Claude Pro subscription example
+
+An example of the Claude Desktop usage screen after subscribing to Pro:
+
+![Claude Desktop usage settings showing an active Pro subscription](docs/images/pro-subscription-example.png)
+
+Plan availability and usage limits depend on your account and the provider's current terms.
+
 ## Install and run
 
 Requires macOS, Node.js 18+, Python 3.9+, and Git for the GitHub install. Install Claude Code or Claude Desktop separately when needed. Install the CLI from the npm registry or directly from GitHub.
