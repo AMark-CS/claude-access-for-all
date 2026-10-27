@@ -1,4 +1,4 @@
-<h1><img src="docs/images/logo.png" width="48" align="center" alt="Claude Access for All logo" /> &nbsp;Claude Access for All</h1>
+<h1><img src="docs/images/logo.png" width="36" height="36" align="absmiddle" alt="" />&nbsp; Claude Access for All</h1>
 
 **Frontier intelligence should serve humanity, in every corner of the world.**
 
