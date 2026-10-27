@@ -11,8 +11,9 @@ const help = `Claude Access for All
 Usage: claude-access [command] [options]
 
   menu                   Open the interactive menu (default)
-  doctor [--json]        Check local installation and configuration presence
-  audit [--json]         Inspect CLI environment signals locally
+  doctor                 Check local installation and configuration presence
+  audit                  Inspect CLI environment signals locally
+  score                  Score locally observable timezone signals
   cli [options] [-- ...] Launch Claude Code with scoped locale settings
   app [options]          Launch Claude Desktop with scoped locale settings
   web [options]          Launch Claude in a separate browser profile
@@ -23,8 +24,8 @@ Usage: claude-access [command] [options]
   version                Show the package version
 
 Examples:
-  claude-access cli --timezone UTC -- --version
-  claude-access web --browser edge --timezone UTC
+  claude-access cli --timezone America/Los_Angeles -- --version
+  claude-access web --browser edge --timezone America/Los_Angeles
   claude-access reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
 
 Requires macOS, Node.js 18+, and Python 3.9+. Launching Claude requires the
@@ -47,6 +48,7 @@ function dispatch(command, args = []) {
   switch (command) {
     case 'doctor': return run('python3', [join(root, 'tools/access.py'), 'doctor', ...args]);
     case 'audit': return run('python3', [join(root, 'tools/privacy.py'), 'audit', ...args]);
+    case 'score': return run('python3', [join(root, 'tools/score.py'), ...args]);
     case 'cli': case 'app': case 'web':
       return run('python3', [join(root, 'tools/privacy.py'), command, ...args]);
     case 'reminder': return run('python3', [join(root, 'tools/access.py'), 'reminder', ...args]);
@@ -69,10 +71,10 @@ async function menu() {
   }
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   try {
-    console.log(`\nClaude Access for All\n\n  1  Check local environment\n  2  Inspect CLI signals\n  3  Start Claude Code\n  4  Start Claude Desktop\n  5  Start Claude in a separate browser profile\n  6  Open browser signal inspector\n  7  Open the privacy guide\n  8  Create a renewal calendar file\n  0  Exit\n`);
+    console.log(`\nClaude Access for All\n\n  1  Check local environment\n  2  Inspect CLI signals\n  3  Start Claude Code\n  4  Start Claude Desktop\n  5  Start Claude in a separate browser profile\n  6  Open browser signal inspector\n  7  Open the privacy guide\n  8  Create a renewal calendar file\n  9  Score local timezone signals\n  0  Exit\n`);
     const choice = (await rl.question('Choose an option: ')).trim();
     if (choice === '0') return 0;
-    const simple = { '1': 'doctor', '2': 'audit', '3': 'cli', '4': 'app', '6': 'inspect', '7': 'guide' };
+    const simple = { '1': 'doctor', '2': 'audit', '3': 'cli', '4': 'app', '6': 'inspect', '7': 'guide', '9': 'score' };
     if (simple[choice]) { rl.close(); return dispatch(simple[choice]); }
     if (choice === '5') {
       const browser = (await rl.question('Browser (chrome/edge) [chrome]: ')).trim() || 'chrome';
@@ -93,7 +95,7 @@ async function menu() {
       console.log(`Created ${output}. Import it into Calendar and check notification settings.`);
       return 0;
     }
-    console.error('Unknown option. Run the menu again to choose 0–8.');
+    console.error('Unknown option. Run the menu again to choose 0–9.');
     return 2;
   } finally { rl.close(); }
 }

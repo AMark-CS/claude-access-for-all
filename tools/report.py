@@ -1,4 +1,4 @@
-"""Readable, privacy-conscious CLI reports. JSON remains available via --json."""
+"""Readable, privacy-conscious CLI reports."""
 import os
 import sys
 

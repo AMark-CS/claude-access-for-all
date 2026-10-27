@@ -40,6 +40,15 @@ class PrivacyToolTests(unittest.TestCase):
             with patch('socket.socket', side_effect=AssertionError('unexpected network')):
                 privacy.audit({})
 
+    def test_cli_default_timezone_is_los_angeles(self):
+        with patch.object(sys, 'argv', ['privacy.py', 'cli']):
+            with patch.object(sys, 'platform', 'darwin'):
+                with patch.object(privacy.shutil, 'which', return_value='/fake/claude'):
+                    with patch.object(privacy.os, 'execve', side_effect=SystemExit(0)) as execve:
+                        with self.assertRaises(SystemExit):
+                            privacy.main()
+        self.assertEqual(execve.call_args.args[2]['TZ'], 'America/Los_Angeles')
+
     def test_cli_rejects_unknown_timezone_without_launch(self):
         script = str(Path(privacy.__file__))
         result = subprocess.run([sys.executable, script, 'cli', '--timezone', 'Mars/Olympus'], capture_output=True)

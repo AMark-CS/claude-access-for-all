@@ -57,19 +57,20 @@ Choose an action from the interactive menu, or call one directly:
 ```sh
 claude-access doctor
 claude-access audit
-claude-access cli --timezone UTC
-claude-access app --timezone UTC
-claude-access web --browser chrome --timezone UTC
+claude-access score
+claude-access cli --timezone America/Los_Angeles
+claude-access app --timezone America/Los_Angeles
+claude-access web --browser chrome --timezone America/Los_Angeles
 claude-access inspect
 claude-access reminder --renewal 2026-12-01 --days-before 3 > renewal.ics
 open renewal.ics
 ```
 
-To install directly from GitHub, use `npm install -g github:AMark-CS/claude-access-for-all`. Use `claude-access help` to see the complete command list. Diagnostics display a readable summary by default; use `claude-access doctor --json` or `claude-access audit --json` for machine-readable output. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
+To install directly from GitHub, use `npm install -g github:AMark-CS/claude-access-for-all`. Use `claude-access help` to see the complete command list. Diagnostics display a readable summary by default. `inspect` opens the local graphical browser inspector in your default browser. To check a separate browser profile, open its local file in that profile instead; see the [privacy inspector guide](docs/privacy-inspector.md).
 
 For the calendar reminder, replace the example date with the next billing date shown by your billing provider. The file contains one all-day review event with an alert; import it into Apple Calendar and check your notification settings. It neither cancels nor renews anything, and must be regenerated when the billing date changes.
 
-The diagnostics run offline and do not print environment-variable values. The scoped launchers request process-local timezone and language settings; Desktop and browsers may behave differently. The browser launcher opens Claude in a separate profile and prints its private data directory. Review the [privacy guide](docs/privacy-inspector.md) for limitations before use.
+The diagnostics run offline and do not print environment-variable values. The `score` command uses the third-party reference weights for timezone and UTC offset only, with its partial denominator and unmeasured browser signals clearly labeled; it is not a ban prediction. Scoped launchers default to the Los Angeles timezone. The scoped launchers request process-local timezone and language settings; Desktop and browsers may behave differently. The browser launcher opens Claude in a separate profile and prints its private data directory. Review the [privacy guide](docs/privacy-inspector.md) for limitations before use.
 
 To run the source version directly without npm, use `python3 tools/access.py doctor` or `python3 tools/privacy.py audit` from a clone. Review the short [source](tools/access.py) before running it.
 

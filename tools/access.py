@@ -2,7 +2,6 @@
 """Offline environment checks and a one-time subscription review calendar."""
 import argparse
 from datetime import date, datetime, timedelta, timezone
-import json
 import os
 import platform
 import shutil
@@ -94,15 +93,14 @@ def reminder(renewal, lead, today=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    diagnostic = commands.add_parser('doctor', help='Print an offline environment report.')
-    diagnostic.add_argument('--json', action='store_true', help='Output machine-readable JSON.')
+    commands.add_parser('doctor', help='Print an offline environment report.')
     calendar = commands.add_parser('reminder', help='Print a one-time .ics calendar to stdout.')
     calendar.add_argument('--renewal', type=parse_date, required=True)
     calendar.add_argument('--days-before', type=days_before, default=3)
     args = parser.parse_args()
     if args.command == 'doctor':
         result = doctor()
-        print(json.dumps(result, indent=2) if args.json else render_doctor(result))
+        print(render_doctor(result))
     else:
         try:
             content = reminder(args.renewal, args.days_before)

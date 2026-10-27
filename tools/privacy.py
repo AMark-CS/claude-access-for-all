@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Inspect and launch Claude clients with explicit, process-scoped locale settings."""
 import argparse
-import json
 import os
 from pathlib import Path
 import platform
@@ -67,11 +66,10 @@ def browser_command(browser, profile, language, timezone, locale):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
-    diagnostic = sub.add_parser('audit', help='Show local signals without exposing secret values.')
-    diagnostic.add_argument('--json', action='store_true', help='Output machine-readable JSON.')
+    sub.add_parser('audit', help='Show local signals without exposing secret values.')
     for name in ('cli', 'app', 'web'):
         command = sub.add_parser(name, help='Launch ' + name + ' with process-scoped settings.')
-        command.add_argument('--timezone', type=validate_timezone, default='UTC')
+        command.add_argument('--timezone', type=validate_timezone, default='America/Los_Angeles')
         command.add_argument('--locale', type=validate_locale, default='en_US.UTF-8')
         if name == 'cli':
             command.add_argument('claude_args', nargs=argparse.REMAINDER)
@@ -84,7 +82,7 @@ def main():
     args = parser.parse_args()
     if args.command == 'audit':
         result = audit()
-        print(json.dumps(result, indent=2) if args.json else render_audit(result))
+        print(render_audit(result))
         return
     if sys.platform != 'darwin':
         parser.error('Launch commands require macOS.')

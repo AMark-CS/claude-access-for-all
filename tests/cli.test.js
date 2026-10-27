@@ -16,9 +16,9 @@ test('help and unknown commands have useful exit codes', () => {
 
 test('audit reaches packaged Python without exposing secrets', () => {
   const marker = 'test-secret-not-for-output';
-  const result = spawnSync(process.execPath, [cli, 'audit', '--json'], { encoding: 'utf8', env: { ...process.env, ANTHROPIC_API_KEY: marker } });
+  const result = spawnSync(process.execPath, [cli, 'audit'], { encoding: 'utf8', env: { ...process.env, ANTHROPIC_API_KEY: marker } });
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(JSON.parse(result.stdout).credential_overrides_set.ANTHROPIC_API_KEY, true);
+  assert.match(result.stdout, /ANTHROPIC_API_KEY/);
   assert.ok(!result.stdout.includes(marker));
 });
 
@@ -49,8 +49,12 @@ test('default diagnostics are readable and identify active variables without val
   }
 });
 
-test('doctor JSON remains machine readable', () => {
-  const result = run('doctor', '--json');
+test('score shows a partial denominator and disabled JSON option', () => {
+  const result = run('score');
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(typeof JSON.parse(result.stdout).claude_on_path, 'boolean');
+  assert.match(result.stdout, /Partial score/);
+  assert.match(result.stdout, /Not measured/);
+  assert.equal(run('doctor', '--json').status, 2);
+  assert.equal(run('audit', '--json').status, 2);
+  assert.equal(run('score', '--json').status, 2);
 });
